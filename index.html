@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hours Left Today</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #111;
+      color: white;
+      text-align: center;
+      flex-direction: column;
+      padding: 20px;
+    }
+    .label {
+      font-size: 1.5em;
+      margin-bottom: 10px;
+    }
+    .countdown {
+      font-size: 3em;
+      font-weight: bold;
+      letter-spacing: 1px;
+      margin-bottom: 20px;
+    }
+    .quote {
+      font-size: 1.2em;
+      color: #aaa;
+      max-width: 400px;
+    }
+  </style>
+</head>
+<body>
+  <div id="widget">
+    <div class="label">⏳ Time Left Today</div>
+    <div id="countdown" class="countdown">Loading...</div>
+    <div id="quote" class="quote">Loading quote...</div>
+  </div>
+
+  <script>
+    // Quotes pool (31 quotes for each day of the month)
+    const quotes = [
+      "Every second counts. Don’t waste it.",
+      "Make today count.",
+      "Your future is created by what you do today.",
+      "Small steps every day lead to big results.",
+      "Time is your most valuable asset.",
+      "Don't count the hours, make the hours count.",
+      "Push yourself, because no one else is going to do it for you.",
+      "Discipline is choosing between what you want now and what you want most.",
+      "Stay consistent, stay patient.",
+      "Use your time wisely – you won't get it back.",
+      "One hour today is worth two tomorrow.",
+      "Progress is progress, no matter how small.",
+      "The key to success is in your daily routine.",
+      "Winners focus on winning. Losers focus on winners.",
+      "The clock is ticking. What are you waiting for?",
+      "Dream big. Work hard. Stay focused.",
+      "Time flies. Make it count.",
+      "Your habits decide your future.",
+      "A minute wasted is a minute lost forever.",
+      "You are your only limit.",
+      "Hustle in silence. Let success make the noise.",
+      "Success is the sum of small efforts, repeated daily.",
+      "The best time to start was yesterday. The second best is now.",
+      "Time waits for no one.",
+      "Be stronger than your excuses.",
+      "Make the hours work for you.",
+      "Stay focused and never give up.",
+      "Turn your dreams into plans.",
+      "One step closer every hour.",
+      "Work hard in silence. Let time reveal your results.",
+      "Let today be the start of something new."
+    ];
+
+    function updateCountdown() {
+      const now = new Date();
+      const endOfDay = new Date();
+      endOfDay.setHours(23, 59, 59, 999);
+
+      const diff = endOfDay - now;
+
+      const hours = String(Math.floor(diff / (1000 * 60 * 60))).padStart(2, '0');
+      const minutes = String(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+      const seconds = String(Math.floor((diff % (1000 * 60)) / 1000)).padStart(2, '0');
+
+      document.getElementById("countdown").textContent = `${hours}:${minutes}:${seconds}`;
+    }
+
+    function setDailyQuote() {
+      const dayOfMonth = new Date().getDate(); // 1-31
+      const quote = quotes[(dayOfMonth - 1) % quotes.length];
+      document.getElementById("quote").textContent = quote;
+    }
+
+    updateCountdown();
+    setDailyQuote();
+
+    setInterval(updateCountdown, 1000); // update timer every second
+  </script>
+</body>
+</html>
